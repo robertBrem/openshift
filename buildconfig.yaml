@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: backend-docker
+  name: backend-docker
+  namespace: appuio-demo9463
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: backend:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    binary:
+      asFile: backend.war
+    dockerfile: |-
+      FROM openshift/wildfly:10.1
+
+      MAINTAINER Robert Brem <robert.brem@adesso.ch>
+
+      ADD backend.war $JBOSS_HOME/standalone/deployments/
+    type: Binary
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: wildfly:10.1
+        namespace: openshift
+    type: Docker
+  triggers: []

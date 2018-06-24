@@ -68,7 +68,7 @@ podTemplate() {
             milestone 4
             stage('Deploy on Dev') {
                 openshift.withProject('myproject') {
-                    def dc = openshift.selector('dc', appName).object()
+                    def dc = openshift.selector('dc', project).object()
                     def oldResourceVersion = dc.metadata.resourceVersion.toInteger()
                     sh "sed -i -e 's/version: todo/version: ${currentVersion}/' deploymentconfig.yml"
                     sh "sed -i -e 's/value: \"todo\"/value: \"${currentVersion}\"/' deploymentconfig.yml"
@@ -76,7 +76,7 @@ podTemplate() {
                     sh "sed -i -e 's~172.30.1.1:5000/myproject/backend:todo~docker-172.30.1.1:5000/myproject/backend:${currentVersion}~' deploymentconfig.yml"
                     openshift.apply(readFile('deploymentconfig.yml'))
                     try {
-                        openshift.selector('dc', appName).rollout().latest()
+                        openshift.selector('dc', project).rollout().latest()
                     } catch (e) {
                         echo "rollout latest failed: ${e.getMessage()}"
                     }

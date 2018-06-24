@@ -47,12 +47,12 @@ podTemplate() {
         }
 
         stage('Build Image') {
-            openshift.withProject('myproject') {
-                openshift.apply(readFile('imageconfig.yml'))
-            }
-            openshift.withProject('myproject') {
-                openshift.apply(readFile('buildconfig.yml'))
-            }
+            //  openshift.withProject('myproject') {
+            //      openshift.apply(readFile('imageconfig.yml'))
+            //  }
+            // openshift.withProject('myproject') {
+            //     openshift.apply(readFile('buildconfig.yml'))
+            // }
             openshift.withProject('myproject') {
                 def build = openshift.startBuild("${project}-docker --from-file=target/backend.war")
                 waitForBuildToComplete(build)

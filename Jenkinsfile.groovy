@@ -31,7 +31,7 @@ podTemplate() {
             }
 
             stage('Tag this version') {
-                createTag(currentVersion, repo)
+               // createTag(currentVersion, repo)
             }
         }
 

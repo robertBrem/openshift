@@ -1,5 +1,29 @@
+---
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: backend
-  namespace: appuio-demo9463
+  namespace: myproject
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: wildfly
+  namespace: myproject
+spec:
+  tags:
+  - annotations:
+      supports: wildfly
+      tags: builder,wildfly,java
+      version: "13"
+    from:
+      kind: DockerImage
+      name: jboss/wildfly:13.0.0.Final
+    name: "13"
+  - annotations:
+      supports: jee,java
+      tags: builder,wildfly,java
+    from:
+      kind: ImageStreamTag
+      name: "13"
+    name: latest

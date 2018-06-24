@@ -4,30 +4,30 @@ metadata:
   labels:
     app: backend-docker
   name: backend-docker
-  namespace: appuio-demo9463
+  namespace: myproject
 spec:
   output:
     to:
       kind: ImageStreamTag
       name: backend:latest
+      namespace: myproject
   postCommit: {}
-  resources: {}
+  resources:
+    limits:
+      memory: 1Gi
   runPolicy: Serial
   source:
+    dockerfile: |-
+      FROM wildfly
+      MAINTAINER Robert Brem <robert.brem@adesso.ch>
+      ADD backend.war $JBOSS_HOME/standalone/deployments/
     binary:
       asFile: backend.war
-    dockerfile: |-
-      FROM openshift/wildfly:10.1
-
-      MAINTAINER Robert Brem <robert.brem@adesso.ch>
-
-      ADD backend.war $JBOSS_HOME/standalone/deployments/
-    type: Binary
+    type: Docker
   strategy:
     dockerStrategy:
       from:
         kind: ImageStreamTag
-        name: wildfly:10.1
-        namespace: openshift
+        name: wildfly:latest
     type: Docker
-  triggers: []
+  triggers: {}

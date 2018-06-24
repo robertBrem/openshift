@@ -5,6 +5,6 @@ import javax.ejb.Stateless
 @Stateless
 open class WITBService {
 
-    fun whoIsTheBest() = "Thomas"
+    open fun whoIsTheBest() = "Thomas"
 
 }

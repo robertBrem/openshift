@@ -12,6 +12,6 @@ open class WITBResource {
     private lateinit var witbService: WITBService
 
     @GET
-    fun get() = witbService.whoIsTheBest()
+    open fun get() = witbService.whoIsTheBest()
 
 }

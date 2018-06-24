@@ -73,7 +73,7 @@ podTemplate() {
                     sh "sed -i -e 's/version: todo/version: ${currentVersion}/' deploymentconfig.yml"
                     sh "sed -i -e 's/value: \"todo\"/value: \"${currentVersion}\"/' deploymentconfig.yml"
                     sh "sed -i -e 's/resourceVersion: todo/resourceVersion: \"${oldResourceVersion}\"/' deploymentconfig.yml"
-                    sh "sed -i -e 's~172.30.1.1:5000/myproject/backend:todo~docker-172.30.1.1:5000/myproject/backend:${currentVersion}~' deploymentconfig.yml"
+                    sh "sed -i -e 's~172.30.1.1:5000/myproject/backend:todo~172.30.1.1:5000/myproject/backend:${currentVersion}~' deploymentconfig.yml"
                     openshift.apply(readFile('deploymentconfig.yml'))
                     try {
                         openshift.selector('dc', project).rollout().latest()

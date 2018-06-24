@@ -1,7 +1,17 @@
 @Library('semantic_releasing') _
 
 podTemplate() {
-    applyProperties()
+    properties([
+            buildDiscarder(
+                    logRotator(artifactDaysToKeepStr: '',
+                            artifactNumToKeepStr: '',
+                            daysToKeepStr: '',
+                            numToKeepStr: '30'
+                    )
+            ),
+            pipelineTriggers([])
+    ])
+
 
     def currentVersion = 'latest'
     def project = 'backend'

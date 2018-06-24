@@ -16,7 +16,7 @@ podTemplate() {
     def currentVersion = 'latest'
     def project = 'backend'
 
-    node(nodeName) {
+    node {
         stage('Checkout') {
             cleanWs()
             doCheckout('https://github.com/robertBrem/openshift')

@@ -16,7 +16,7 @@ podTemplate() {
     def currentVersion = 'latest'
     def project = 'backend'
 
-    node {
+    node('maven') {
         stage('Checkout') {
             git url: 'https://github.com/robertBrem/openshift'
         }
@@ -27,7 +27,7 @@ podTemplate() {
             stage('Set new version') {
                 currentVersion = semanticReleasing()
                 currentBuild.displayName = currentVersion
-                mvn("versions:set -DnewVersion=${currentVersion}")
+                sh "mvn versions:set -DnewVersion=${currentVersion}"
             }
 
             stage('Tag this version') {
@@ -36,8 +36,8 @@ podTemplate() {
         }
 
         stage('Build Backend') {
-            mvn('clean package')
-            publishUnitTests()
+            sh 'mvn clean package'
+            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/TEST-*.xml'
         }
 
         stage('Build Image') {

@@ -6,7 +6,7 @@ import javax.ws.rs.GET
 import javax.ws.rs.Path
 
 @Path("/whoisthebest")
-class WITBResource {
+open class WITBResource {
 
     @Inject
     private lateinit var witbService: WITBService

@@ -18,7 +18,7 @@ podTemplate() {
 
     node {
         stage('Checkout') {
-            doCheckout('https://github.com/robertBrem/openshift')
+            git url: 'https://github.com/robertBrem/openshift'
         }
 
         milestone 1

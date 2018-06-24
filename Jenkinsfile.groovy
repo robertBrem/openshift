@@ -55,7 +55,10 @@ podTemplate() {
             // }
             openshift.withProject('myproject') {
                 def build = openshift.startBuild("${project}-docker --from-file=target/backend.war")
-                waitForBuildToComplete(build)
+                build.untilEach(1) {
+                    return (it.object().status.phase == 'Complete')
+                }
+
                 openshift.tag("myproject/${project}:latest myproject/${project}:${currentVersion}")
             }
         }

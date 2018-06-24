@@ -15,10 +15,11 @@ podTemplate() {
 
     def currentVersion = 'latest'
     def project = 'backend'
+    def repo = 'https://github.com/robertBrem/openshift'
 
     node('maven') {
         stage('Checkout') {
-            git url: 'https://github.com/robertBrem/openshift'
+            git url: repo
         }
 
         milestone 1
@@ -31,7 +32,12 @@ podTemplate() {
             }
 
             stage('Tag this version') {
-               // createTag(currentVersion, repo)
+                sh "git config user.email \"jenkins@khinkali.ch\""
+                sh "git config user.name \"Jenkins\""
+                sh "git tag -a ${currentVersion} -m \"${currentVersion}\""
+                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/robertbrem/openshift.git --tags"
+                }
             }
         }
 

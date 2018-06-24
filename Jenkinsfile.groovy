@@ -47,10 +47,10 @@ podTemplate() {
         }
 
         stage('Build Image') {
-            openshift.withProject(project) {
+            openshift.withProject('myproject') {
                 openshift.apply(readFile('buildconfig.yml'))
             }
-            openshift.withProject(project) {
+            openshift.withProject('myproject') {
                 def build = openshift.startBuild("${project}-docker --from-file=target/backend.war")
                 waitForBuildToComplete(build)
                 openshift.tag("myproject/${project}:latest myproject/${project}:${currentVersion}")
@@ -61,7 +61,7 @@ podTemplate() {
         lock(resource: 'openshift-en-env', inversePrecedence: true) {
             milestone 4
             stage('Deploy on Dev') {
-                openshift.withProject(project) {
+                openshift.withProject('myproject') {
                     def dc = openshift.selector('dc', appName).object()
                     def oldResourceVersion = dc.metadata.resourceVersion.toInteger()
                     sh "sed -i -e 's/version: todo/version: ${currentVersion}/' deploymentconfig.yml"

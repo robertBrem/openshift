@@ -3,13 +3,16 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: backend
+    version: todo
   name: backend
   namespace: myproject
+  resourceVersion: todo
 spec:
   replicas: 1
   selector:
     app: backend
     deploymentconfig: backend
+    version: todo
   strategy:
     rollingParams:
       intervalSeconds: 1
@@ -23,9 +26,10 @@ spec:
       labels:
         app: backend
         deploymentconfig: backend
+        version: todo
     spec:
       containers:
-        - image: 172.30.1.1:5000/myproject/backend:latest
+        - image: 172.30.1.1:5000/myproject/backend:todo
           imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 6

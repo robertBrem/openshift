@@ -18,7 +18,6 @@ podTemplate() {
 
     node {
         stage('Checkout') {
-            cleanWs()
             doCheckout('https://github.com/robertBrem/openshift')
         }
 

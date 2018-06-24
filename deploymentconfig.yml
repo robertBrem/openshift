@@ -34,7 +34,7 @@ spec:
           livenessProbe:
             failureThreshold: 6
             httpGet:
-              path: /backend/resources/hello
+              path: /backend/resources/health
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 30
@@ -51,7 +51,7 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /backend/resources/hello
+              path: /backend/resources/health
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 10

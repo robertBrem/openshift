@@ -1,14 +1,13 @@
-package ch.adesso.openshift.backend.hello.boundary;
+package ch.adesso.openshift.backend.messages.boundary;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-@Path("hello")
-public class HelloResource {
+@Path("messages")
+public class MessagesResource {
 
     @GET
     public JsonArray getHello() {

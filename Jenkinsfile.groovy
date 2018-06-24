@@ -48,6 +48,9 @@ podTemplate() {
 
         stage('Build Image') {
             openshift.withProject('myproject') {
+                openshift.apply(readFile('imageconfig.yml'))
+            }
+            openshift.withProject('myproject') {
                 openshift.apply(readFile('buildconfig.yml'))
             }
             openshift.withProject('myproject') {

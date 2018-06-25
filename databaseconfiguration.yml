@@ -76,12 +76,12 @@ spec:
         env:
         - name: POSTGRESQL_DATABASE
           value: "database"
-        - name: POSTGRESQL_PASSWORD
+        - name: POSTGRESQL_USER
           valueFrom:
             secretKeyRef:
               name: database
               key: user
-        - name: POSTGRES_PASSWORD
+        - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: database

@@ -28,14 +28,14 @@ public class MessagesIT {
 
     @Test(timeout = 2_000L)
     public void a01_shouldReturnListOfMessages() {
+        Logger.getLogger(MessagesIT.class.getName()).log(Level.SEVERE, provider
+                .target()
+                .path("messages").getUri().toString());
         JsonArray coins = provider
                 .target()
                 .path("messages")
                 .request()
                 .get(JsonArray.class);
-        Logger.getLogger(MessagesIT.class.getName()).log(Level.INFO, provider
-                .target()
-                .path("messages").getUri().toString());
         assertThat(coins.toString(), containsString("vshn"));
     }
 

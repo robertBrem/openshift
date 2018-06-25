@@ -29,12 +29,12 @@ public class MessagesResource {
 
     @GET
     public JsonArray getAll() {
-        JsonArrayBuilder messageBuilder = Json.createArrayBuilder();
-        provider.getAll()
+        return provider.getAll()
                 .stream()
-                .map(m -> m.getJson())
-                .forEach(m -> messageBuilder.add(m));
-        return messageBuilder
+                .map(Message::getJson)
+                .collect(Json::createArrayBuilder,
+                        JsonArrayBuilder::add,
+                        JsonArrayBuilder::add)
                 .build();
     }
 

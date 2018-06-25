@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import javax.json.JsonArray;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static com.airhacks.rulz.jaxrsclient.JAXRSClientProvider.buildWithURI;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -28,9 +26,6 @@ public class MessagesIT {
 
     @Test(timeout = 2_000L)
     public void a01_shouldReturnListOfMessages() {
-        Logger.getLogger(MessagesIT.class.getName()).log(Level.SEVERE, provider
-                .target()
-                .path("messages").getUri().toString());
         JsonArray coins = provider
                 .target()
                 .path("messages")

@@ -45,6 +45,36 @@ spec:
           env:
           - name: VERSION
             value: "todo"
+          - name: DB_HOST
+            value: "database"
+          - name: DB_PORT
+            value: "5432"
+          - name: WILDFLY_USER
+            valueFrom:
+              secretKeyRef:
+                name: appserver
+                key: user
+          - name: WILDFLY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: appserver
+                key: password
+          - name: JNDI_NAME
+            value: "java:jboss/jdbc/database"
+          - name: DATASOURCE_NAME
+            value: "Database"
+          - name: DATABASE_NAME
+            value: "database"
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                name: database
+                key: user
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: database
+                key: password
           ports:
             - containerPort: 8080
               protocol: TCP

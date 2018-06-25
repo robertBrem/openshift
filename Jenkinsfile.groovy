@@ -93,7 +93,7 @@ podTemplate() {
 
             stage('System Tests') {
                 withEnv(['HOST=backend', 'PORT=8080']) {
-                    sh " mvn clean integration-test failsafe:integration-test failsafe:verify"
+                    sh "mvn clean integration-test failsafe:integration-test failsafe:verify"
                     junit allowEmptyResults: true, testResults: '**/target/failsafe-reports/TEST-*.xml'
                 }
             }

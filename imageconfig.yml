@@ -18,7 +18,7 @@ spec:
       version: "13"
     from:
       kind: DockerImage
-      name: jboss/wildfly:13.0.0.Final
+      name: khinkali/wildfly-postgres:0.0.10
     name: "13"
   - annotations:
       supports: jee,java

@@ -36,7 +36,7 @@ public class WITBIT {
     }
 
     @Test(timeout = 2_000L)
-    public void a01_shouldAddMessage() throws IOException {
+    public void a01_shouldReturnTheBest() {
         String whiIsTheBest = provider
                 .target()
                 .path("whoisthebest")

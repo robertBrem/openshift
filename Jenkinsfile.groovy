@@ -51,6 +51,7 @@ podTemplate() {
                 withSonarQubeEnv('Sonar') {
                     container('maven') {
                         sh """
+                            echo base64 --encode ${SONAR_KEY}
                             mvn sonar:sonar \
                              -Dsonar.host.url=http://sonar:9000 \
                              -Dsonar.login=${SONAR_KEY} \

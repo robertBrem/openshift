@@ -46,6 +46,30 @@ podTemplate() {
             junit allowEmptyResults: true, testResults: '**/target/surefire-reports/TEST-*.xml'
         }
 
+        stage('sonar analysis') {
+            withCredentials([string(credentialsId: 'sonar-key', variable: 'SONAR_KEY')]) {
+                withSonarQubeEnv('Sonar') {
+                    container('maven') {
+                        sh """
+                            mvn sonar:sonar \
+                             -Dsonar.host.url=http://sonar:9000 \
+                             -Dsonar.login=${SONAR_KEY} \
+                             -Dsonar.exclusions=**/Jenkinsfile.groovy,**/target/**
+                           """
+                    }
+                }
+            }
+        }
+
+        stage("Quality Gate") {
+            timeout(time: 5, unit: 'MINUTES') {
+                def qg = waitForQualityGate()
+                if (qg.status != 'OK') {
+                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                }
+            }
+        }
+
         stage('Build Image') {
             //  openshift.withProject('myproject') {
             //      openshift.apply(readFile('imageconfig.yml'))

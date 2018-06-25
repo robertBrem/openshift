@@ -9,7 +9,10 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -49,7 +52,7 @@ public class MessagesResource {
                 .getRequestUriBuilder()
                 .path(MessagesResource.class, "get")
                 .build(created.getId());
-        return Response.created(uri).header(HttpHeaders.LOCATION, uri).build();
+        return Response.created(uri).build();
 
     }
 }

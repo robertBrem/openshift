@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import javax.json.JsonArray;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.airhacks.rulz.jaxrsclient.JAXRSClientProvider.buildWithURI;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -31,6 +33,9 @@ public class MessagesIT {
                 .path("messages")
                 .request()
                 .get(JsonArray.class);
+        Logger.getLogger(MessagesIT.class.getName()).log(Level.INFO, provider
+                .target()
+                .path("messages").getUri().toString());
         assertThat(coins.toString(), containsString("vshn"));
     }
 

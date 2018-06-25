@@ -50,6 +50,7 @@ public class MessagesIT {
                 .post(Entity.json(messageToAdd));
         assertThat(postResponse.getStatus(), is(201));
         location = postResponse.getHeaderString(LOCATION);
+        System.out.println("location = " + location);
     }
 
     @Test(timeout = 2_000L)

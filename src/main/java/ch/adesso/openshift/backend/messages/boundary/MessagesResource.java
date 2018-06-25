@@ -49,7 +49,7 @@ public class MessagesResource {
                 .getRequestUriBuilder()
                 .path(MessagesResource.class, "get")
                 .build(created.getId());
-        return Response.accepted().header(HttpHeaders.LOCATION, uri).build();
+        return Response.created(uri).header(HttpHeaders.LOCATION, uri).build();
 
     }
 }

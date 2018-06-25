@@ -1,6 +1,5 @@
 package ch.adesso.openshift.backend.messages.boundary;
 
-import ch.adesso.openshift.backend.messages.control.MessageProvider;
 import ch.adesso.openshift.backend.messages.entity.Message;
 
 import javax.ejb.Stateless;
@@ -10,7 +9,8 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.*;
+import java.net.URI;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,6 +20,9 @@ public class MessagesResource {
 
     @Inject
     MessageProvider provider;
+
+    @Context
+    UriInfo uriInfo;
 
     @GET
     public JsonArray getAll() {
@@ -39,7 +42,14 @@ public class MessagesResource {
     }
 
     @POST
-    public void create(JsonObject message) {
-        provider.create(new Message(message));
+    public Response create(JsonObject message) {
+        Message created = provider.create(new Message(message));
+
+        final URI uri = uriInfo
+                .getRequestUriBuilder()
+                .path(MessagesResource.class, "get")
+                .build(created.getId());
+        return Response.accepted().header(HttpHeaders.LOCATION, uri).build();
+
     }
 }

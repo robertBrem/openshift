@@ -31,6 +31,7 @@ public class Message {
 
     public JsonObject getJson() {
         return Json.createObjectBuilder()
+                .add("id", id)
                 .add("value", value)
                 .build();
     }

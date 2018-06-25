@@ -1,4 +1,4 @@
-package ch.adesso.openshift.backend.messages.control;
+package ch.adesso.openshift.backend.messages.boundary;
 
 import ch.adesso.openshift.backend.messages.entity.Message;
 

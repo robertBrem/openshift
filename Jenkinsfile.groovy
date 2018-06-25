@@ -46,6 +46,10 @@ podTemplate() {
             junit allowEmptyResults: true, testResults: '**/target/surefire-reports/TEST-*.xml'
         }
 
+        stage('vulnerability check for java libraries') {
+            sh "mvn compile net.ossindex:ossindex-maven-plugin:audit -Daudit.ignore=com.sun.mail:javax.mail:1.5.0"
+        }
+
         stage('sonar analysis') {
             withCredentials([string(credentialsId: 'sonar-key', variable: 'SONAR_KEY')]) {
                 withSonarQubeEnv('Sonar') {
